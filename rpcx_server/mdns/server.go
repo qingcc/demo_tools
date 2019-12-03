@@ -11,9 +11,7 @@ import (
 )
 
 var (
-	addr     = flag.String("addr", ":8005", "server address")
-	zkaddr   = flag.String("zkaddr", "localhost:6033", "zookeeper address")
-	basePath = flag.String("basePath", "rpcx_test", "base path")
+	addr = flag.String("addr", ":8006", "server address")
 )
 
 func main() {
@@ -29,13 +27,7 @@ func main() {
 }
 
 func addRegisterPlugin(s *server.Server) {
-	r := serverplugin.ZooKeeperRegisterPlugin{
-		ServiceAddress:   "tcp@" + *addr,
-		ZooKeeperServers: []string{*zkaddr},
-		BasePath:         *basePath,
-		Metrics:          metrics.NewRegistry(),
-		UpdateInterval:   time.Minute,
-	}
+	r := serverplugin.NewMDNSRegisterPlugin("tcp@"+*addr, 0, metrics.NewRegistry(), time.Minute, "")
 
 	if err := r.Start(); err != nil {
 		log.Fatal(err)
