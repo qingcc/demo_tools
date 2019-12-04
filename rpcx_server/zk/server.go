@@ -29,7 +29,8 @@ func main() {
 }
 
 func addRegisterPlugin(s *server.Server) {
-	r := serverplugin.ZooKeeperRegisterPlugin{
+	//todo & 取地址 一定要取地址，否则报错
+	r := &serverplugin.ZooKeeperRegisterPlugin{
 		ServiceAddress:   "tcp@" + *addr,
 		ZooKeeperServers: []string{*zkaddr},
 		BasePath:         *basePath,

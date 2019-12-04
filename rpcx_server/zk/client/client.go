@@ -16,7 +16,7 @@ var (
 func main() {
 	flag.Parse()
 	d := client.NewZookeeperDiscovery(*basePath, "Arith", []string{*zkAddr}, nil)
-	xclient := client.NewXClient("Arith", client.Failtry, client.RandomSelect, d, client.DefaultOption)
+	xclient := client.NewXClient("Arith", client.Failover, client.RoundRobin, d, client.DefaultOption)
 	defer xclient.Close()
 
 	reply := &example.Reply{}
