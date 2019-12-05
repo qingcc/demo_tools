@@ -38,8 +38,13 @@ func printCallerName() string {
 	return runtime.FuncForPC(pc).Name()
 }
 
-func CreateServer(addr, meta string) {
+func CreateServer(addr, meta, t string) {
 	s := server.NewServer()
-	s.RegisterName("Arith", new(example.Arith), meta)
+	if t == "" {
+		s.RegisterName("Arith", new(example.Arith), meta)
+	} else {
+		s.RegisterName("Arith", new(example.Arith1), meta)
+	}
+
 	s.Serve("tcp", addr)
 }

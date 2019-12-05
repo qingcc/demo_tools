@@ -12,7 +12,7 @@ var (
 
 func main() {
 	flag.Parse()
-	go rpcx_server.CreateServer(*addr1, "")
-	go rpcx_server.CreateServer(*addr2, "")
+	go rpcx_server.CreateServer(*addr1, "weight=7", "")
+	go rpcx_server.CreateServer(*addr2, "weight=3", "1")
 	select {}
 }

@@ -25,9 +25,9 @@ var (
 
 func main() {
 	flag.Parse()
-	go rpcx_server.CreateServer(*addr, "")
-	go rpcx_server.CreateServer(*addr1, "")
-	go rpcx_server.CreateServer(*addr2, *group)
+	go rpcx_server.CreateServer(*addr, "", "")
+	go rpcx_server.CreateServer(*addr1, "", "1")
+	go rpcx_server.CreateServer(*addr2, *group, "")
 	go zk(*zkaddr, "")
 	go mdns(*maddr, "")
 	select {}

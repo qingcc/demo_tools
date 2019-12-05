@@ -16,17 +16,18 @@ todo 在大型的微服务系统中，我们会为同一个服务部署多个节
 var (
 	addr1 = flag.String("addr1", "tcp@localhost:8010", "server address")
 	addr2 = flag.String("addr2", "tcp@localhost:8011", "server address")
+	addr  = flag.String("baidu", "tcp@baidu.com:8080", "server address")
 
 	xclient client.XClient
 )
 
 func main() {
 	flag.Parse()
-	randomSelect()
-	//roundRobin()
-	//weightedRoundRobin()
-	//weightedICMP()
-	//consistentHash()
+	//randomSelect() //随机
+	//roundRobin()	//轮询
+	//weightedRoundRobin() //权重
+	//weightedICMP()	//ping	网络质量优先 todo panic: this lib has not been with tag 'ping'
+	consistentHash() //hash
 	//geo()
 	defer xclient.Close()
 	rpcx_server.Cal(xclient)
@@ -59,7 +60,7 @@ todo (weighted)WeightedRoundRobin	权重	使用Nginx 平滑的基于权重的轮
 			{ c, b, a, a, a, a, a }, 虽然权重都一样，但是前者更好，不至于在一段时间内将请求都发送给a。
 */
 func weightedRoundRobin() {
-	d := client.NewMultipleServersDiscovery([]*client.KVPair{{Key: *addr1}, {Key: *addr2}})
+	d := client.NewMultipleServersDiscovery([]*client.KVPair{{Key: *addr1, Value: "weight=7"}, {Key: *addr2, Value: "weight=3"}})
 	xclient = client.NewXClient("Arith", client.Failtry, client.WeightedRoundRobin, d, client.DefaultOption)
 	return
 }
@@ -73,7 +74,7 @@ TODO (ping)WeightedICMP		网络质量优先		首先客户端会基于ping(ICMP)�
 			weight=0 if t >= 1000
 */
 func weightedICMP() {
-	d := client.NewMultipleServersDiscovery([]*client.KVPair{{Key: *addr1}, {Key: *addr2}})
+	d := client.NewMultipleServersDiscovery([]*client.KVPair{{Key: *addr1}, {Key: *addr}})
 	xclient = client.NewXClient("Arith", client.Failtry, client.WeightedICMP, d, client.DefaultOption)
 	return
 }
@@ -84,7 +85,7 @@ todo (hash)ConsistentHash		一致性哈希	使用 JumpConsistentHash 选择节�
 			所以在节点有变动的时候它会重新计算一致性哈希。
 */
 func consistentHash() {
-	d := client.NewMultipleServersDiscovery([]*client.KVPair{{Key: *addr1, Value: ""}, {Key: *addr2}})
+	d := client.NewMultipleServersDiscovery([]*client.KVPair{{Key: *addr1, Value: ""}, {Key: *addr2, Value: ""}})
 	xclient = client.NewXClient("Arith", client.Failtry, client.ConsistentHash, d, client.DefaultOption)
 	return
 }
