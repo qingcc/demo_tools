@@ -7,6 +7,7 @@ require (
 	github.com/apache/thrift v0.13.0 // indirect
 	github.com/garyburd/redigo v1.6.0 // indirect
 	github.com/gin-gonic/gin v1.4.0
+	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
 	github.com/golang/groupcache v0.0.0-20191027212112-611e8accdfc9 // indirect
 	github.com/huandu/xstrings v1.2.1 // indirect
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
