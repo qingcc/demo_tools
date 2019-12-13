@@ -13,6 +13,7 @@ import (
 var (
 	addr1 = flag.String("addr1", "tcp@localhost:8008", "server address")
 	addr2 = flag.String("addr2", "tcp@localhost:8009", "server address")
+	saddr  = flag.String("saddr", "tcp@localhost:6035", "state service address")
 )
 
 func main() {
@@ -20,7 +21,7 @@ func main() {
 	broadcast()
 }
 func broadcast() {
-	d := client.NewMultipleServersDiscovery([]*client.KVPair{{Key: *addr1}, {Key: *addr2}})
+	d := client.NewMultipleServersDiscovery([]*client.KVPair{{Key: *addr1}, {Key: *addr2}, {Key:*saddr}})
 	xclient := client.NewXClient("Arith", client.Failover, client.RoundRobin, d, client.DefaultOption)
 	defer xclient.Close()
 	cal(xclient)
