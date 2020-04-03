@@ -5,6 +5,7 @@ go 1.13
 require (
 	github.com/anacrolix/sync v0.2.0 // indirect
 	github.com/apache/thrift v0.13.0 // indirect
+	github.com/coreos/etcd v3.3.17+incompatible
 	github.com/garyburd/redigo v1.6.0 // indirect
 	github.com/gin-gonic/gin v1.4.0
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
@@ -15,6 +16,7 @@ require (
 	github.com/lucas-clemente/quic-go v0.13.1 // indirect
 	github.com/mattn/go-colorable v0.1.4 // indirect
 	github.com/mattn/go-isatty v0.0.10 // indirect
+	github.com/nacos-group/nacos-sdk-go v0.0.0-20190820112454-5245ea3cded6
 	github.com/rcrowley/go-metrics v0.0.0-20190826022208-cac0b30c2563
 	github.com/shopspring/decimal v0.0.0-20191009025716-f1972eb1d1f5 // indirect
 	github.com/smallnest/rpcx v0.0.0-20191202025149-2fd1f4f7e90c

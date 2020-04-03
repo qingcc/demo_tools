@@ -148,5 +148,110 @@ func TestTransaction(t *testing.T) {
 }
 
 func TestLease(t *testing.T) {
+	c := GetConn()
 
+	kv := clientv3.NewKV(c)
+
+	ctx, _ := context.WithTimeout(context.Background(), time.Second*5)
+	key := "demo/demo1_key"
+	//delete all keys
+	kv.Delete(ctx, key, clientv3.WithPrefix())
+
+	l := clientv3.NewLease(c)
+
+	//lease
+	lease, err := c.Grant(ctx, 3)
+	if err != nil {
+		panic("grant lease failed, err:" + err.Error())
+	}
+	//insert key with a lease of 3 second ttl
+	kv.Put(ctx, key, "release_value_of_3_second", clientv3.WithLease(lease.ID))
+
+	r, _ := kv.Get(ctx, key)
+	if len(r.Kvs) == 0 {
+		log.Println("no more key")
+	} else {
+		for _, v := range r.Kvs {
+			fmt.Println(fmt.Sprintf("%s:%s", v.Key, string(v.Value)))
+		}
+	}
+
+	time.Sleep(time.Second * 2)
+	fmt.Println("after sleep 2 second")
+	r, _ = kv.Get(ctx, key)
+	if len(r.Kvs) == 0 {
+		log.Println("no more key")
+	} else {
+		for _, v := range r.Kvs {
+			fmt.Println(fmt.Sprintf("%s:%s", v.Key, string(v.Value)))
+		}
+	}
+	time.Sleep(time.Second * 2)
+
+	fmt.Println("after sleep 3 second")
+	r, _ = kv.Get(ctx, key)
+	if len(r.Kvs) == 0 {
+		log.Println("no more key")
+	} else {
+		for _, v := range r.Kvs {
+			fmt.Println(fmt.Sprintf("%s:%s", v.Key, string(v.Value)))
+		}
+	}
+
+	//续租
+	respLease, _ := c.Grant(ctx, 2)
+	ctx1, cancel := context.WithTimeout(context.TODO(), time.Second*2)
+	respLeaseChan, err := c.KeepAlive(ctx1, respLease.ID)
+
+	//watch lease
+	go func() {
+		for {
+			select {
+			case res := <-respLeaseChan:
+				if res == nil {
+					fmt.Println("已经关闭续租功能")
+					return
+				} else {
+					fmt.Println("续租成功")
+					goto END
+				}
+			}
+		}
+	END:
+		time.Sleep(time.Microsecond * 500)
+	}()
+
+	//watch lease
+	go func() {
+		wchan := c.Watch(ctx, key)
+		for w := range wchan {
+			for _, e := range w.Events {
+				fmt.Println(fmt.Sprintf("watch version: %d ==============%s:%s", e.Kv.Version, e.Kv.Key, string(e.Kv.Value)))
+			}
+		}
+	}()
+
+	//lease
+
+	//insert key with a lease of 3 second ttl
+	kv.Put(ctx, key, "release_value_of_3_second", clientv3.WithLease(respLease.ID))
+
+	cancel()
+	time.Sleep(time.Second * 5)
+
+	_, err = l.Revoke(ctx, lease.ID)
+	if err != nil {
+		panic("撤销租约失败" + err.Error())
+	}
+	fmt.Println("撤销租约成功")
+
+	r, _ = kv.Get(ctx, key)
+	if len(r.Kvs) == 0 {
+		log.Println("no more key")
+	} else {
+		for _, v := range r.Kvs {
+			fmt.Println(fmt.Sprintf("%s:%s", v.Key, string(v.Value)))
+		}
+	}
+	time.Sleep(time.Second * 20)
 }
