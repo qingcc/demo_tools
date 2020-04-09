@@ -6,7 +6,6 @@ require (
 	github.com/anacrolix/sync v0.2.0 // indirect
 	github.com/apache/thrift v0.13.0 // indirect
 	github.com/coreos/etcd v3.3.17+incompatible
-	github.com/garyburd/redigo v1.6.0 // indirect
 	github.com/gin-gonic/gin v1.4.0
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
 	github.com/golang/groupcache v0.0.0-20191027212112-611e8accdfc9 // indirect
@@ -17,14 +16,16 @@ require (
 	github.com/mattn/go-colorable v0.1.4 // indirect
 	github.com/mattn/go-isatty v0.0.10 // indirect
 	github.com/nacos-group/nacos-sdk-go v0.0.0-20190820112454-5245ea3cded6
+	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/rcrowley/go-metrics v0.0.0-20190826022208-cac0b30c2563
-	github.com/shopspring/decimal v0.0.0-20191009025716-f1972eb1d1f5 // indirect
 	github.com/smallnest/rpcx v0.0.0-20191202025149-2fd1f4f7e90c
 	github.com/xtaci/kcp-go v5.4.19+incompatible // indirect
 	go.opencensus.io v0.22.2 // indirect
+	go.uber.org/zap v1.12.0
 	golang.org/x/crypto v0.0.0-20191128160524-b544559bb6d1 // indirect
 	golang.org/x/net v0.0.0-20191126235420-ef20fe5d7933 // indirect
 	google.golang.org/appengine v1.6.5 // indirect
+	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 )
 
 replace (
