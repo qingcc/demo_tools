@@ -10,7 +10,7 @@ require (
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
 	github.com/golang/groupcache v0.0.0-20191027212112-611e8accdfc9 // indirect
-	github.com/golang/protobuf v1.4.0 // indirect
+	github.com/golang/protobuf v1.4.0
 	github.com/gorilla/schema v1.1.0 // indirect
 	github.com/huandu/xstrings v1.2.1 // indirect
 	github.com/iris-contrib/blackfriday v2.0.0+incompatible // indirect
@@ -39,6 +39,8 @@ require (
 	golang.org/x/crypto v0.0.0-20191128160524-b544559bb6d1 // indirect
 	golang.org/x/net v0.0.0-20191126235420-ef20fe5d7933 // indirect
 	google.golang.org/appengine v1.6.5 // indirect
+	google.golang.org/grpc v1.27.0
+	google.golang.org/protobuf v1.21.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 )
 

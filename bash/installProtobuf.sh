@@ -23,6 +23,7 @@ hasError=`protoc --version| grep "error"`
 if [ "${hasError}" == "" ]; then
   go get github.com/golang/protobuf
   go install github.com/golang/protobuf/protoc-gen-go/
+  cp "${GOPATH}/bin/protoc-gen-go" /usr/bin/
   protoc --go_out=. hello.proto
 else
   echo "has wrong"

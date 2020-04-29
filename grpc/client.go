@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/qingcc/demo_tools/grpc/helloService"
 
 	"google.golang.org/grpc"
 )
@@ -12,7 +13,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	client := NewHelloServiceClient(conn)
-	r, err := client.SayHello(context.Background(), &Request{Data: []byte("send from client")})
+	client := helloService.NewHelloServiceClient(conn)
+	r, err := client.SayHello(context.Background(), &helloService.Request{Data: []byte("send from client")})
 	fmt.Printf("%s\n", string(r.Data))
 }

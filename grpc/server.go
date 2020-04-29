@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/qingcc/demo_tools/grpc/helloService"
 	"net"
 
 	"google.golang.org/grpc"
@@ -10,10 +11,10 @@ import (
 
 type HelloServiceServerImpl struct{}
 
-func (s *HelloServiceServerImpl) SayHello(c context.Context, req *Request) (*Response, error) {
+func (s *HelloServiceServerImpl) SayHello(c context.Context, req *helloService.Request) (*helloService.Response, error) {
 	fmt.Printf("%s\n", string(req.Data))
 
-	resp := Response{}
+	resp := helloService.Response{}
 	resp.Data = []byte("hello from server")
 
 	return &resp, nil
@@ -26,7 +27,7 @@ func main() {
 		return
 	}
 	s := grpc.NewServer()
-	RegisterHelloServiceServer(s, &HelloServiceServerImpl{})
+	helloService.RegisterHelloServiceServer(s, &HelloServiceServerImpl{})
 	fmt.Printf("Server listening on 127.0.0.1:57501\n")
 	s.Serve(lis)
 }
