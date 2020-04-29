@@ -1,6 +1,8 @@
 package util
 
 import (
+	_ "net/http/pprof"
+
 	"bytes"
 	"crypto/md5"
 	rand2 "crypto/rand"
@@ -9,10 +11,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/pkg/profile"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"io"
+	"log"
 	"math"
 	"math/rand"
 	"net"
+	"net/http"
 	"reflect"
 	"strconv"
 	"strings"
@@ -56,7 +62,6 @@ func CheckErr(err error) {
 		fmt.Println(err.Error())
 	}
 }
-
 
 //生成32位随机序列
 func RandNewStr(strlen int) string {
@@ -390,3 +395,45 @@ func Json2Map(json_inter interface{}) (jsonMap map[string]interface{}) {
 //endregion
 
 //endregion
+
+//region Remark: pprof监测 Author:qing
+func Pprof(addr string) {
+	if addr == "" {
+		addr = ":6061"
+	}
+	go func() {
+		log.Println(http.ListenAndServe(addr, nil))
+	}()
+}
+
+//endregion
+
+func Pprof2File(f func()) {
+	stopper := profile.Start(profile.BlockProfile, profile.ProfilePath(".")) // 开始性能分析, 返回一个停止接口
+	defer stopper.Stop()                                                     // 在被测试程序结束时停止性能分析
+	f()
+}
+
+//开启一个端口采集数据，可用于分析性能（cpu，内存， goroutine使用情况等等）
+func InitPprof(addr string) {
+	if addr == "" {
+		addr = ":8081"
+	}
+	metricsRouter := http.DefaultServeMux
+	metricsRouter.Handle("/metrics", promhttp.Handler())
+	metricsRouter.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("hello world"))
+	})
+
+	pprofServer := &http.Server{
+		Addr:    addr,
+		Handler: metricsRouter,
+	}
+
+	go func() {
+		if err := pprofServer.ListenAndServe(); err != nil {
+			println("ListenAndServe metrics: ", err.Error())
+		}
+	}()
+	select {}
+}

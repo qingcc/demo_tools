@@ -22,8 +22,7 @@ func GetConn() *clientv3.Client {
 func getConn() *clientv3.Client {
 	//客户端配置
 	config := clientv3.Config{
-		//Endpoints:   []string{"47.112.210.86:7379"},
-		Endpoints:   []string{"119.23.57.143:7379"},
+		Endpoints:   []string{"47.112.210.86:7379", "47.112.210.86:7369", "47.112.210.86:7359"},
 		DialTimeout: 10 * time.Second,
 	}
 

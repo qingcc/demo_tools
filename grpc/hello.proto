@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+ service HelloService{
+     rpc SayHello(Request) returns(Response){}
+ }
+
+ message Request{
+     int32 id = 1;
+     string req = 2;
+     bytes data = 3;
+ }
+
+ message Response{
+     int32 id = 1;
+     string resp = 2;
+     bytes data = 3;
+ }

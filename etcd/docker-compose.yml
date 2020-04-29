@@ -1,33 +1,118 @@
 version: "3"
 services:
-  etcd:
+  etcd0:
     image: quay.io/coreos/etcd
-    container_name: etcd-node
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    container_name: etcd0
     ports:
-       - "7379:2379"
-       - "7380:2380"
+       - 7379:2379
+       - 7380:2380
     user: root
     volumes:
-      - "/root/docker/etcd/etcd-data:/etcd-data"
+      - /root/docker/etcd/etcd-data0:/etcd-data
     environment:
       - "ETCDCTL_API=3"
-      - "ETCD_ADVERTISE_CLIENT_URLS=http://119.23.57.143:7379"
-      - "ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379"
-      - "ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380"
-      - "ETCD_INITIAL_ADVERTISE_PEER_URLS=http://119.23.57.143:7380"
-      - "ALLOW_NONE_AUTHENTICATION=yes"
-      - "ETCD_INITIAL_CLUSTER=node1=http://47.112.210.86:7380,node2=http://119.23.57.143:7380,node3=http://119.23.40.36:7380"
-      - "ETCD_NAME=node1"
-      - "ETCD_DATA_DIR=/etcd-data"
-      - "ETCD_INITIAL_CLUSTER_TOKEN=etcd-token"
-      - "ETCD_INITIAL_CLUSTER_STATE=new"
-    networks:
-      - etcdnet
+    command:
+      - /usr/local/bin/etcd
+      - -name
+      - etcd0
+      - --data-dir
+      - /etcd_data
+      - -advertise-client-urls
+      - http://etcd0:2379
+      - -listen-client-urls
+      - http://0.0.0.0:2379
+      - -initial-advertise-peer-urls
+      - http://etcd0:2380
+      - -listen-peer-urls
+      - http://0.0.0.0:2380
+      - -initial-cluster
+      - etcd0=http://etcd0:2380,etcd1=http://etcd1:2380,etcd2=http://etcd2:2380
+      - --data-dir
+      - /etcd-data
+      - -initial-cluster-token
+      - etcd-token
+      - -initial-cluster-state
+      - new
+#    networks:
+#      etcdnet:
+#        ipv4_address: 172.25.0.10
 
-networks:
-  etcdnet:
-    driver: bridge
+  etcd1:
+      image: quay.io/coreos/etcd
+      container_name: etcd1
+      ports:
+         - 7369:2379
+         - 7370:2380
+      user: root
+      volumes:
+        - /root/docker/etcd/etcd-data1:/etcd-data
+      environment:
+        - "ETCDCTL_API=3"
+      command:
+        - /usr/local/bin/etcd
+        - -name
+        - etcd1
+        - --data-dir
+        - /etcd_data
+        - -advertise-client-urls
+        - http://etcd1:2379
+        - -listen-client-urls
+        - http://0.0.0.0:2379
+        - -initial-advertise-peer-urls
+        - http://etcd1:2380
+        - -listen-peer-urls
+        - http://0.0.0.0:2380
+        - -initial-cluster
+        - etcd0=http://etcd0:2380,etcd1=http://etcd1:2380,etcd2=http://etcd2:2380
+        - --data-dir
+        - /etcd-data
+        - -initial-cluster-token
+        - etcd-token
+        - -initial-cluster-state
+        - new
+#      networks:
+#        etcdnet:
+#          ipv4_address: 172.25.0.11
+
+  etcd2:
+      image: quay.io/coreos/etcd
+      container_name: etcd2
+      ports:
+         - 7359:2379
+         - 7360:2380
+      user: root
+      volumes:
+        - /root/docker/etcd/etcd-data2:/etcd-data
+      environment:
+        - "ETCDCTL_API=3"
+      command:
+        - /usr/local/bin/etcd
+        - -name
+        - etcd2
+        - --data-dir
+        - /etcd_data
+        - -advertise-client-urls
+        - http://etcd2:2379
+        - -listen-client-urls
+        - http://0.0.0.0:2379
+        - -initial-advertise-peer-urls
+        - http://etcd2:2380
+        - -listen-peer-urls
+        - http://0.0.0.0:2380
+        - -initial-cluster
+        - etcd0=http://etcd0:2380,etcd1=http://etcd1:2380,etcd2=http://etcd2:2380
+        - --data-dir
+        - /etcd-data
+        - -initial-cluster-token
+        - etcd-token
+        - -initial-cluster-state
+        - new
+#      networks:
+#        etcdnet:
+#          ipv4_address: 172.25.0.12
+#
+#networks:
+#  etcdnet:
+#    ipam:
+#      config:
+#        - subnet: 172.25.0.0/16
