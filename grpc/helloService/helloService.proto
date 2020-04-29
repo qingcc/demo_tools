@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "grpc/helloService";
+option go_package = ".";
 
 service HelloService{
      rpc SayHello(Request) returns(Response){}
