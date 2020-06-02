@@ -1,6 +1,7 @@
 package util
 
 import (
+	"github.com/tealeg/xlsx"
 	_ "net/http/pprof"
 
 	"bytes"
@@ -436,4 +437,32 @@ func InitPprof(addr string) {
 		}
 	}()
 	select {}
+}
+
+func NewXlsx(filename string, cols []string, data [][]string) error {
+	var (
+		file  *xlsx.File
+		sheet *xlsx.Sheet
+		row   *xlsx.Row
+		err   error
+	)
+	file = xlsx.NewFile()
+	sheet, err = file.AddSheet("Sheet1")
+	if err != nil {
+		log.Println(err.Error())
+		return err
+	}
+
+	row = sheet.AddRow()
+
+	for _, col := range cols {
+		row.AddCell().Value = col
+	}
+	for _, cols := range data {
+		row = sheet.AddRow()
+		for _, col := range cols {
+			row.AddCell().Value = col
+		}
+	}
+	return file.Save(filename)
 }
