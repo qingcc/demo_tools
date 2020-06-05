@@ -16,3 +16,5 @@ service HelloService{
      string resp = 2;
      bytes data = 3;
  }
+#protoc grpc/helloService/helloService.proto -I. --go_out=grpc/helloService/
+#protoc grpc/helloService/helloService.proto -I. --go_out=plugins=grpc:grpc/helloService/
