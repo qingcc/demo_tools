@@ -176,7 +176,7 @@ func (n *node) minValue() (key int) {
 }
 
 func (n *node) minNode() *node {
-	for n != nil {
+	for n != nil && n.left != nil {
 		n = n.left
 	}
 	return n
@@ -190,7 +190,7 @@ func (n *node) maxValue() (key int) {
 }
 
 func (n *node) maxNode() *node {
-	for n != nil {
+	for n != nil && n.right != nil {
 		n = n.right
 	}
 	return n
@@ -786,21 +786,21 @@ func (tree *RBTree) RemoveNode(n *node) {
 
 	//如果待删除节点为红色，直接删除
 	if n.isBlack() {
-		replace.deleteFixUp(tree)
+		replace.deleteFixUp(tree, n.parent)
 	}
 	n.clear()
 }
 
-func (replace *node) deleteFixUp(tree *RBTree) { //im. replace is nil todo need fix
+func (replace *node) deleteFixUp(tree *RBTree, parent *node) { //im. replace is nil todo need fix
 	for (replace == nil || replace.isBlack()) && replace != tree.root {
-		parent := replace.parent
+		//parent := replace.parent
 		brother := replace.getBrother()
 		if replace.isLeftSon() {
 			//case1, brother is red
 			/*
 			 *   p                       bb
 			 *  / \       p ll          / \
-			 * n   br      ----->      p   brb
+			 * n   br      ----->      pr  brb
 			 *    / \                 / \
 			 *   blb brb             n  blb
 			 */

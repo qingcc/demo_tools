@@ -19,4 +19,15 @@ func TestInsert(t *testing.T) {
 		fmt.Println("\n后序遍历:")
 		rbtree.root.postOrder()
 	}
+	for i, _ := range a {
+		i = a[8-i]
+		fmt.Println("\n删除的数据：", i)
+		rbtree.Remove(i)
+		fmt.Println("\n前序遍历:")
+		rbtree.root.PreOrder()
+		fmt.Println("\n中序遍历:")
+		rbtree.root.inOrder()
+		fmt.Println("\n后序遍历:")
+		rbtree.root.postOrder()
+	}
 }
