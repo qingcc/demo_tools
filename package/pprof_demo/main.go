@@ -13,7 +13,7 @@ func main() {
 		log.Println(http.ListenAndServe("localhost:8009", nil))
 	}()
 	c := cron.New()
-	c.AddFunc(fmt.Sprintf("0 */%d * * *", *intervalTime), func() {
+	c.AddFunc(fmt.Sprintf("0 */%d * * *", 5), func() {
 		fmt.Println("aaa")
 	})
 	c.Start()
