@@ -8,7 +8,7 @@ require (
 	github.com/coreos/etcd v3.3.17+incompatible
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
 	github.com/golang/groupcache v0.0.0-20191027212112-611e8accdfc9 // indirect
-	github.com/golang/protobuf v1.4.0
+	github.com/golang/protobuf v1.4.3
 	github.com/huandu/xstrings v1.2.1 // indirect
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/klauspost/reedsolomon v1.9.3 // indirect
@@ -18,7 +18,7 @@ require (
 	github.com/nacos-group/nacos-sdk-go v0.0.0-20190820112454-5245ea3cded6
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/pkg/profile v1.4.0
-	github.com/prometheus/client_golang v1.1.0
+	github.com/prometheus/client_golang v1.11.1
 	github.com/rcrowley/go-metrics v0.0.0-20190826022208-cac0b30c2563
 	github.com/robfig/cron v1.2.0
 	github.com/smallnest/rpcx v0.0.0-20191202025149-2fd1f4f7e90c
@@ -26,11 +26,9 @@ require (
 	github.com/xtaci/kcp-go v5.4.19+incompatible // indirect
 	go.opencensus.io v0.22.2 // indirect
 	go.uber.org/zap v1.12.0
-	golang.org/x/crypto v0.0.0-20191128160524-b544559bb6d1 // indirect
-	golang.org/x/net v0.0.0-20191126235420-ef20fe5d7933 // indirect
 	google.golang.org/appengine v1.6.5 // indirect
 	google.golang.org/grpc v1.27.0
-	google.golang.org/protobuf v1.21.0
+	google.golang.org/protobuf v1.26.0-rc.1
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 )
 
