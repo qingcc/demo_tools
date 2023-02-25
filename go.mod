@@ -26,8 +26,7 @@ require (
 	github.com/xtaci/kcp-go v5.4.19+incompatible // indirect
 	go.opencensus.io v0.22.2 // indirect
 	go.uber.org/zap v1.12.0
-	golang.org/x/crypto v0.0.0-20191128160524-b544559bb6d1 // indirect
-	golang.org/x/net v0.0.0-20191126235420-ef20fe5d7933 // indirect
+	golang.org/x/crypto v0.1.0 // indirect
 	google.golang.org/appengine v1.6.5 // indirect
 	google.golang.org/grpc v1.27.0
 	google.golang.org/protobuf v1.21.0
